@@ -1,10 +1,10 @@
 module.exports = function(grunt) {
     grunt.initConfig({
-        pkg: grunt.file.readJSON('package.json'),
+        pkg: grunt.file.readJSON('package.json'), // ate essa parte e igual pra todo arquivo grunt
         less: {
             development: {
                 files:{
-                    'main.css' : 'main.less'
+                    'dev/styles/main.css' : 'src/styles/main.less'
                 }
             },
             production : {
@@ -12,34 +12,21 @@ module.exports = function(grunt) {
                     compress: true
                 },
                 files: {
-                    'main.min.css' : 'main.css'
+                    'dist/styles/main.min.css' : 'src/styles/main.less'
                 }
             }
-        },
-
-        sass: {
-            dist: {
-                options: {
-                    style :'compressed'
-                },
-                files: {
-                    'main2.css' : 'main.scss'
-                }
+        }, //ate aqui e como se faz a configiracao do less
+        watch: {
+            less: {
+                files: ['src/styles/**/*.less'], // quando se usa '/**' estamos referenciando qualquer pasta e quando usamos /* estamos referenciando qualquer arquivo
+                tasks: ['less:development']  
             }
-        }
+        } 
     })
 
-    grunt.registerTask('olaGrunt',function(){
-        const done = this.async()
-        setTimeout(function(){
-            console.log('ola grunt')
-            done()
-        }, 3000)
-        
-    })
+    grunt.loadNpmTasks('grunt-contrib-less') //importando o plugin do less
+    grunt.loadNpmTasks('grunt-contrib-watch') //importando o plugin do watch
 
-    grunt.loadNpmTasks('grunt-contrib-less')
-    grunt.loadNpmTasks('grunt-contrib-sass')
-
-    grunt.registerTask('default', ['less', 'sass'])
+    grunt.registerTask('default', ['watch'])
+    grunt.registerTask('build', ['less:production'])
 }
