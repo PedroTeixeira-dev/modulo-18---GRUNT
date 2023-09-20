@@ -55,6 +55,10 @@ module.exports = function(grunt) {
                         {
                             match:'ENDERECO_DO_CSS',
                             replacement:'./styles/main.min.css'  
+                        },
+                        {
+                            match:'ENDERECO_DO_JS',
+                            replacement:'./scripts/main.min.js'  
                         }
                     ]
                 },
@@ -79,7 +83,14 @@ module.exports = function(grunt) {
                 }
             }
         },
-        clean: ['prebuild']
+        clean: ['prebuild'],
+        uglify: {
+            target: {
+                files: {
+                    'dist/scripts/main.min.js' : 'src/scripts/main.js'
+                }
+            }
+        }
     })
 
     grunt.loadNpmTasks('grunt-contrib-less') //importando o plugin do less
@@ -87,7 +98,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-replace') // importando o plugin de substituir
     grunt.loadNpmTasks('grunt-contrib-htmlmin') // importando o arquivo de minificacao do html
     grunt.loadNpmTasks('grunt-contrib-clean') //usado para limpar pastas, no caso, as temporarias
+    grunt.loadNpmTasks('grunt-contrib-uglify') // usado para minificar o js
 
     grunt.registerTask('default', ['watch'])
-    grunt.registerTask('build', ['less:production','htmlmin:dist','replace:dist','clean'])
+    grunt.registerTask('build', ['less:production','htmlmin:dist','replace:dist','clean', 'uglify'])
 }
