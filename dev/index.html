@@ -12,13 +12,17 @@
 <body>
     <main>
         <h1>Sorteador</h1>
-        <form>
+        <form id="form-sorteador">
             <div>
                 <label for="numero-maximo">Numero maximo</label>
-                <input type="number" id="numero-maximo" >
+                <input type="number" id="numero-maximo" required value="2" >
             </div>
             <button type="submit">Sortear numero</button>
         </form>
+        <div class="resultado">
+            O numero sorteado foi : <span id="resultado-valor"></span>
+        </div>
     </main>
+    <script src="../src/scripts/main.js"></script>
 </body>
 </html>
